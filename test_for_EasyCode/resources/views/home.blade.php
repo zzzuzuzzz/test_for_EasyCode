@@ -39,14 +39,14 @@
                                                     <div class="active tab-pane" id="activity">
                                                         <div class="post">
                                                             <p>Почта подтверждена.</p>
-                                                                @if(isset($user->phone))
-                                                                    <p>Вы пока не подтвердили номер телефона. <a href="/home">Подтвердить?</a></p>
-                                                                @else
-                                                                    <p>Номер телефона подтвержден.</p>
-                                                                @endif
+{{--                                                                @if($user->phone == null)--}}
+{{--                                                                    <p>Вы пока не подтвердили номер телефона. <a href="/home">Подтвердить?</a></p>--}}
+{{--                                                                @else--}}
+{{--                                                                    <p>Номер телефона подтвержден.</p>--}}
+{{--                                                                @endif--}}
 
-                                                                @if(isset($user->tg))
-                                                                    <p>Вы пока не подтвердили телеграмм. <a href="/home">Подтвердить?</a></p>
+                                                                @if($user->tg == null)
+                                                                    <p>Вы пока не подтвердили телеграмм. <a href="https://t.me/laravel_test_for_EasyCode_bot">Подтвердить?</a></p>
                                                                 @else
                                                                     <p>Телеграмм подтвержден.</p>
                                                                 @endif
@@ -54,12 +54,13 @@
                                                     </div>
 
                                                     <div class="tab-pane" id="settings">
-                                                        <form class="form-horizontal">
+                                                        <form class="form-horizontal" action="{{ route('changeSettings') }}" method="post">
+                                                            @csrf
                                                             <p>Для того что бы поменять имя, Вам необходимо вписать новое имя и выбрать способ подтверждения</p>
                                                             <div class="form-group row">
                                                                 <label for="inputName" class="col-sm-2 col-form-label">Имя</label>
                                                                 <div class="col-sm-10">
-                                                                    <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                                                    <input name="name" type="text" class="form-control" id="inputName" placeholder="Name">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -67,8 +68,10 @@
                                                                 <div class="col-sm-10">
                                                                     <select name="select" class="w-100">
                                                                         <option value="email">Подтвердить смену имени по почте</option>
-                                                                        <option value="phone">Подтвердить смену имени по номеру телефона</option>
-                                                                        <option value="tg">Подтвердить смену имени в телеграмме</option>
+{{--                                                                        <option value="phone">Подтвердить смену имени по номеру телефона</option>--}}
+                                                                        @if($user->tg != null)
+                                                                            <option value="tg">Подтвердить смену имени в телеграмме</option>
+                                                                        @endif
                                                                     </select>
                                                                 </div>
                                                             </div>
